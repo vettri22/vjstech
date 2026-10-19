@@ -4,6 +4,9 @@ const https = require('https');
 const PORT = 3000;
 const SUBDOMAIN = 'vjstech';
 
+// Keep event loop alive
+setInterval(() => {}, 1000 * 60);
+
 function getTunnelPassword() {
   return new Promise((resolve) => {
     https.get('https://loca.lt/mytunnelpassword', (res) => {
@@ -20,37 +23,45 @@ function getTunnelPassword() {
   });
 }
 
-async function startTunnel() {
+async function connectTunnel() {
   const ip = await getTunnelPassword();
   console.log('====================================================');
   console.log(`[VJS TECH] Public Live Access Tunnel`);
-  console.log(`[VJS TECH] Tunnel URL: https://${SUBDOMAIN}.loca.lt`);
+  console.log(`[VJS TECH] Preferred Subdomain: ${SUBDOMAIN}`);
   console.log(`[VJS TECH] Tunnel Password / IP: ${ip}`);
   console.log('====================================================');
 
-  try {
-    const tunnel = await localtunnel({
+  return new Promise((resolve) => {
+    localtunnel({
       port: PORT,
       subdomain: SUBDOMAIN,
       local_host: 'localhost',
-    });
+    }).then(tunnel => {
+      console.log(`[VJS TECH] Tunnel is actively connected: ${tunnel.url}`);
 
-    console.log(`[VJS TECH] Tunnel is actively connected: ${tunnel.url}`);
+      tunnel.on('close', () => {
+        console.warn('[VJS TECH] Tunnel socket closed. Will reconnect...');
+        resolve();
+      });
 
-    tunnel.on('close', () => {
-      console.warn('[VJS TECH] Tunnel closed. Reconnecting in 3 seconds...');
-      setTimeout(startTunnel, 3000);
+      tunnel.on('error', (err) => {
+        console.error('[VJS TECH] Tunnel socket error:', err.message);
+        try { tunnel.close(); } catch (_) {}
+        resolve();
+      });
+    }).catch(err => {
+      console.error('[VJS TECH] Failed to connect tunnel:', err.message);
+      resolve();
     });
+  });
+}
 
-    tunnel.on('error', (err) => {
-      console.error('[VJS TECH] Tunnel error:', err.message);
-      try { tunnel.close(); } catch (_) {}
-      setTimeout(startTunnel, 3000);
-    });
-  } catch (err) {
-    console.error('[VJS TECH] Failed to start tunnel:', err.message);
-    setTimeout(startTunnel, 3000);
+async function startLoop() {
+  while (true) {
+    await connectTunnel();
+    console.log('[VJS TECH] Reconnecting in 3 seconds...');
+    await new Promise(r => setTimeout(r, 3000));
   }
 }
 
-startTunnel();
+startLoop();
