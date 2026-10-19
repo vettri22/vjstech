@@ -1,0 +1,30 @@
+{
+  "name": "vjstech-root",
+  "version": "1.0.0",
+  "private": true,
+  "description": "VJS TECH - Freelance Software Solutions Agency Platform",
+  "scripts": {
+    "install:client": "npm --prefix client install",
+    "install:server": "npm --prefix server install",
+    "install:all": "npm run install:server && npm run install:client",
+    "dev:server": "npm --prefix server run dev",
+    "dev:client": "npm --prefix client run dev",
+    "build:client": "npm --prefix client run build",
+    "build:server": "npm --prefix server run build",
+    "build": "npm run build:client && npm run build:server",
+    "start": "node server/dist/index.js",
+    "test:server": "npm --prefix server test",
+    "test": "npm run test:server"
+  },
+  "keywords": [
+    "vjstech",
+    "software-agency",
+    "client-portal",
+    "full-stack"
+  ],
+  "author": "VJS TECH",
+  "license": "UNLICENSED",
+  "devDependencies": {
+    "localtunnel": "^2.0.2"
+  }
+}
