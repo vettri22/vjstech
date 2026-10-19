@@ -65,6 +65,13 @@ export async function getDb(): Promise<SqlJsDatabase> {
     // Column already exists
   }
 
+  // Safe schema migration for portfolio order_index column
+  try {
+    dbInstance.exec("ALTER TABLE portfolio_projects ADD COLUMN order_index INTEGER NOT NULL DEFAULT 0;");
+  } catch (_e) {
+    // Column already exists
+  }
+
   saveDb();
 
   // Run initial seeds if needed

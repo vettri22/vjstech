@@ -7,6 +7,7 @@ CREATE TABLE IF NOT EXISTS users (
   role TEXT NOT NULL CHECK(role IN ('admin', 'client')),
   organization TEXT,
   phone TEXT,
+  client_status TEXT NOT NULL DEFAULT 'active',
   created_at TEXT NOT NULL,
   updated_at TEXT NOT NULL
 );
@@ -105,6 +106,7 @@ CREATE TABLE IF NOT EXISTS portfolio_projects (
   solution TEXT NOT NULL,
   architecture_highlights TEXT DEFAULT '[]', -- JSON array
   results TEXT,
+  order_index INTEGER NOT NULL DEFAULT 0,
   is_published INTEGER NOT NULL DEFAULT 1,
   created_at TEXT NOT NULL,
   updated_at TEXT NOT NULL
