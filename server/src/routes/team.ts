@@ -1,4 +1,4 @@
-import { Router } from 'express';
+import { Router, Request, Response } from 'express';
 import path from 'path';
 import fs from 'fs';
 import { query, queryOne, run } from '../db';
@@ -9,7 +9,7 @@ import { logAuditEvent } from '../services/audit';
 export const teamRouter = Router();
 
 // GET /api/team (Public: Returns official team members in order with photos)
-teamRouter.get('/', (_req, res) => {
+teamRouter.get('/', (_req: Request, res: Response) => {
   try {
     const members = query<any>(
       `SELECT id, name, role, bio, responsibilities, skills, avatar_initials, photo_url, order_index
@@ -31,7 +31,7 @@ teamRouter.get('/', (_req, res) => {
 });
 
 // POST /api/team/:id/photo (Admin only: Upload and save team member photo)
-teamRouter.post('/:id/photo', requireAdmin, (req: AuthenticatedRequest, res) => {
+teamRouter.post('/:id/photo', requireAdmin, (req: AuthenticatedRequest, res: Response) => {
   try {
     const id = String(req.params.id);
     const { photoData, photoUrl } = req.body;
@@ -122,7 +122,7 @@ teamRouter.post('/:id/photo', requireAdmin, (req: AuthenticatedRequest, res) => 
 });
 
 // DELETE /api/team/:id/photo (Admin only: Remove photo and revert to initials)
-teamRouter.delete('/:id/photo', requireAdmin, (req: AuthenticatedRequest, res) => {
+teamRouter.delete('/:id/photo', requireAdmin, (req: AuthenticatedRequest, res: Response) => {
   try {
     const id = String(req.params.id);
     const existing = queryOne<{ id: string; name: string }>(
@@ -154,7 +154,7 @@ teamRouter.delete('/:id/photo', requireAdmin, (req: AuthenticatedRequest, res) =
 });
 
 // PATCH /api/team/:id (Admin only: Update team member information)
-teamRouter.patch('/:id', requireAdmin, (req: AuthenticatedRequest, res) => {
+teamRouter.patch('/:id', requireAdmin, (req: AuthenticatedRequest, res: Response) => {
   try {
     const id = String(req.params.id);
     const { name, role, bio, responsibilities, skills, avatar_initials, photo_url, order_index, is_active } = req.body;

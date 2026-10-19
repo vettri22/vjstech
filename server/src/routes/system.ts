@@ -1,4 +1,4 @@
-import { Router } from 'express';
+import { Router, Request, Response } from 'express';
 import { queryOne } from '../db';
 import { getAuditEvents } from '../services/audit';
 import { requireAdmin, AuthenticatedRequest } from '../middleware/auth';
@@ -6,7 +6,7 @@ import { requireAdmin, AuthenticatedRequest } from '../middleware/auth';
 export const systemRouter = Router();
 
 // GET /api/health
-systemRouter.get('/health', (_req, res) => {
+systemRouter.get('/health', (_req: Request, res: Response) => {
   try {
     const dbCheck = queryOne('SELECT 1 as alive');
     const memory = process.memoryUsage();
@@ -34,7 +34,7 @@ systemRouter.get('/health', (_req, res) => {
 });
 
 // GET /api/audit (Admin only)
-systemRouter.get('/audit', requireAdmin, (req: AuthenticatedRequest, res) => {
+systemRouter.get('/audit', requireAdmin, (req: AuthenticatedRequest, res: Response) => {
   try {
     const limit = parseInt(req.query.limit as string) || 100;
     const events = getAuditEvents(limit);
@@ -45,7 +45,7 @@ systemRouter.get('/audit', requireAdmin, (req: AuthenticatedRequest, res) => {
 });
 
 // GET /api/docs (OpenAPI-style endpoint directory)
-systemRouter.get('/docs', (_req, res) => {
+systemRouter.get('/docs', (_req: Request, res: Response) => {
   res.json({
     title: 'VJS TECH Agency & Client Portal API',
     version: '1.0.0',

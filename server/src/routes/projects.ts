@@ -1,4 +1,4 @@
-import { Router } from 'express';
+import { Router, Response } from 'express';
 import { v4 as uuidv4 } from 'uuid';
 import { z } from 'zod';
 import { query, queryOne, run } from '../db';
@@ -369,7 +369,7 @@ projectsRouter.get('/:id/architectures', requireAuth, verifyProjectAccess, (req:
 });
 
 // PATCH /api/projects/:id/architectures/:archId/review (Client or Admin: approve or decline proposal with feedback)
-projectsRouter.patch('/:id/architectures/:archId/review', requireAuth, verifyProjectAccess, (req: AuthenticatedRequest, res) => {
+projectsRouter.patch('/:id/architectures/:archId/review', requireAuth, verifyProjectAccess, (req: AuthenticatedRequest, res: Response) => {
   try {
     const { id: projectId, archId } = req.params;
     const { status, clientFeedback } = req.body;
@@ -436,7 +436,7 @@ projectsRouter.patch('/:id/architectures/:archId/review', requireAuth, verifyPro
 });
 
 // GET /api/projects/:id/messages (Direct notes & feedback between admin and client)
-projectsRouter.get('/:id/messages', requireAuth, verifyProjectAccess, (req: AuthenticatedRequest, res) => {
+projectsRouter.get('/:id/messages', requireAuth, verifyProjectAccess, (req: AuthenticatedRequest, res: Response) => {
   try {
     const projectId = req.params.id;
     const messages = query<any>(
@@ -450,7 +450,7 @@ projectsRouter.get('/:id/messages', requireAuth, verifyProjectAccess, (req: Auth
 });
 
 // POST /api/projects/:id/messages (Admin or Client: post direct message/note/feedback)
-projectsRouter.post('/:id/messages', requireAuth, verifyProjectAccess, (req: AuthenticatedRequest, res) => {
+projectsRouter.post('/:id/messages', requireAuth, verifyProjectAccess, (req: AuthenticatedRequest, res: Response) => {
   try {
     const projectId = req.params.id;
     const { content, messageType } = req.body;
