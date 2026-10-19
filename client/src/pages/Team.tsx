@@ -13,6 +13,7 @@ const fallbackTeam: TeamMemberProps[] = [
     responsibilities: 'Coordinates project planning, client communication, requirement discussions, and delivery alignment.',
     skills: ['Project Management', 'Client Relations', 'Requirements Engineering', 'Agile Delivery'],
     avatar_initials: 'VV',
+    photo_url: '/uploads/team/team_5a047602-88d8-4ab0-849f-056ddc57bdf9_1792401529766.jpg',
     order_index: 1,
   },
   {
@@ -21,6 +22,7 @@ const fallbackTeam: TeamMemberProps[] = [
     responsibilities: 'Focuses on interface design, user experience, responsive layouts, and frontend implementation.',
     skills: ['UI/UX Design', 'React / TypeScript', 'Design Systems', 'Responsive Web', 'WCAG Accessibility'],
     avatar_initials: 'JP',
+    photo_url: '/uploads/team/team_f0281466-edf5-4394-908c-e8e6e7d4d248_1792401279893.png',
     order_index: 2,
   },
   {
@@ -29,6 +31,7 @@ const fallbackTeam: TeamMemberProps[] = [
     responsibilities: 'Focuses on backend services, application logic, API development, and system integration.',
     skills: ['REST APIs', 'Node.js / Express', 'Python / FastAPI', 'System Integration', 'Auth & Security'],
     avatar_initials: 'KY',
+    photo_url: '/uploads/team/team_42ad33d5-ca77-4b3c-8777-9d5b1def6bdc_1792399975615.png',
     order_index: 3,
   },
   {
@@ -37,6 +40,7 @@ const fallbackTeam: TeamMemberProps[] = [
     responsibilities: 'Focuses on database design, data management, deployment workflows, and DevOps responsibilities.',
     skills: ['PostgreSQL / SQL', 'Database Optimization', 'Docker & CI/CD', 'Cloud Deployment', 'Linux'],
     avatar_initials: 'VU',
+    photo_url: '/uploads/team/team_27f1ff30-51f6-4ee2-ba38-bd234364273d_1792401680094.jpg',
     order_index: 4,
   },
   {
@@ -45,6 +49,7 @@ const fallbackTeam: TeamMemberProps[] = [
     responsibilities: 'Focuses on AI/ML integration, quality assurance, software testing, and security-focused reviews.',
     skills: ['AI/ML Integrations', 'Automated Testing', 'Application Security', 'Defensive Hardening', 'Quality Assurance'],
     avatar_initials: 'SK',
+    photo_url: '/uploads/team/team_38df086b-17ea-4089-86a3-723705b77761_1792401476777.jpg',
     order_index: 5,
   },
 ];

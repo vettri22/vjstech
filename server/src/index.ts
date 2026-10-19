@@ -52,12 +52,33 @@ app.use(
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
-// Static directory for uploaded assets (team member photos, etc.)
+// Static directory for uploaded assets (team member photos, portfolio screenshots, etc.)
 const uploadsDir = path.resolve(process.cwd(), 'uploads');
 if (!fs.existsSync(uploadsDir)) {
   fs.mkdirSync(uploadsDir, { recursive: true });
 }
 app.use('/uploads', express.static(uploadsDir));
+
+// Fallback static providers for bundled default assets (ensures photos always render on fresh deployments)
+const publicUploadsDir = path.resolve(process.cwd(), '../client/public/uploads');
+if (fs.existsSync(publicUploadsDir)) {
+  app.use('/uploads', express.static(publicUploadsDir));
+  // Auto-sync bundled assets into local uploads folder if empty
+  try {
+    const teamUploads = path.join(uploadsDir, 'team');
+    const portUploads = path.join(uploadsDir, 'portfolio');
+    if (!fs.existsSync(teamUploads) && fs.existsSync(path.join(publicUploadsDir, 'team'))) {
+      fs.cpSync(path.join(publicUploadsDir, 'team'), teamUploads, { recursive: true });
+    }
+    if (!fs.existsSync(portUploads) && fs.existsSync(path.join(publicUploadsDir, 'portfolio'))) {
+      fs.cpSync(path.join(publicUploadsDir, 'portfolio'), portUploads, { recursive: true });
+    }
+  } catch (_e) {}
+}
+const distUploadsDir = path.resolve(process.cwd(), '../client/dist/uploads');
+if (fs.existsSync(distUploadsDir)) {
+  app.use('/uploads', express.static(distUploadsDir));
+}
 
 // Request logging
 app.use(morgan('combined'));
