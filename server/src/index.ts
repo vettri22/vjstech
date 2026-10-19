@@ -159,6 +159,17 @@ export async function startServer() {
       res.status(404).json({ error: 'The requested API route does not exist.' });
     });
 
+    // Root API Status Indicator
+    app.get('/', (_req, res) => {
+      res.json({
+        service: 'VJS TECH Backend API',
+        status: 'online',
+        health: '/api/health',
+        docs: '/api/docs',
+        message: 'VJS TECH API is online and operational. Access the visual web application via your Vercel URL.',
+      });
+    });
+
     // Serve client static production build with dynamic SSR SEO injection (Items 1, 4, 5, 7, 8, 14)
     const clientDist = path.resolve(process.cwd(), '../client/dist');
     const indexHtmlPath = path.join(clientDist, 'index.html');
