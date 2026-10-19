@@ -27,7 +27,7 @@ export const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ items, className = '' 
       '@type': 'ListItem',
       position: index + 1,
       name: item.label,
-      item: item.to ? `https://vjstech.in${item.to}` : undefined,
+      item: item.to ? `https://vjstech.vercel.app${item.to}` : undefined,
     })),
   };
 

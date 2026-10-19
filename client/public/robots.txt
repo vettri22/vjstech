@@ -4,4 +4,4 @@ Disallow: /admin
 Disallow: /portal
 Disallow: /api/
 
-Sitemap: https://vjstech.in/sitemap.xml
+Sitemap: https://vjstech.vercel.app/sitemap.xml

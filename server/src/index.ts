@@ -32,7 +32,7 @@ app.use(
 // CORS configuration
 const allowedOrigins = process.env.ALLOWED_ORIGINS
   ? process.env.ALLOWED_ORIGINS.split(',')
-  : ['http://localhost:3000', 'http://127.0.0.1:3000', 'http://localhost:5173', 'https://vjstech.in'];
+  : ['http://localhost:3000', 'http://127.0.0.1:3000', 'http://localhost:5173', 'https://vjstech.vercel.app', 'https://vjstech.in'];
 
 app.use(
   cors({
@@ -99,7 +99,7 @@ app.get('/robots.txt', (_req, res) => {
   if (fs.existsSync(robotsPath)) {
     return res.sendFile(robotsPath);
   }
-  res.send('User-agent: *\nAllow: /\nDisallow: /admin\nDisallow: /portal\nDisallow: /api/\nSitemap: https://vjstech.in/sitemap.xml\n');
+  res.send('User-agent: *\nAllow: /\nDisallow: /admin\nDisallow: /portal\nDisallow: /api/\nSitemap: https://vjstech.vercel.app/sitemap.xml\n');
 });
 
 // Explicit Dynamic Sitemap.xml handler (Item 3 & 35)
@@ -116,7 +116,7 @@ app.get('/sitemap.xml', (_req, res) => {
         const today = new Date().toISOString().split('T')[0];
         let dynamicUrls = '';
         for (const p of projects) {
-          const loc = `https://vjstech.in/work/${p.slug}`;
+          const loc = `https://vjstech.vercel.app/work/${p.slug}`;
           if (!xmlContent.includes(loc)) {
             const date = p.updated_at ? p.updated_at.split('T')[0] : today;
             dynamicUrls += `  <url>\n    <loc>${loc}</loc>\n    <lastmod>${date}</lastmod>\n    <changefreq>monthly</changefreq>\n    <priority>0.85</priority>\n  </url>\n`;
