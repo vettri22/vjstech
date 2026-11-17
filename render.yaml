@@ -16,8 +16,4 @@ services:
       - key: ADMIN_INITIAL_PASSWORD
         sync: false
       - key: ALLOWED_ORIGINS
-        value: https://vjstech.in,https://vjstech.onrender.com
-    disk:
-      name: vjstech-data
-      mountPath: /app/server/data
-      sizeGB: 1
+        value: https://vjstech.vercel.app,https://vjstech.onrender.com
